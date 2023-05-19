@@ -1,6 +1,11 @@
-import { Body, Controller, Get, Post, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, Patch, Param, Delete, ParseUUIDPipe, Query, UsePipes } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto } from "./users.validation";
+import {
+  CreateUserDto,
+  PaginateParamsFilterDto,
+  QueryParamsFiltersDto,
+  UpdateUserDto
+} from "./users.dto";
 
 @Controller('users')
 export class UsersController {
@@ -12,8 +17,11 @@ export class UsersController {
   }
 
   @Get()
-  async findAll() {
-    return await this.usersService.findAll();
+  async findAll(
+    @Query() queriesParams: QueryParamsFiltersDto,
+    @Query() paginateParams: PaginateParamsFilterDto
+  ) {
+    return await this.usersService.findAll(queriesParams, paginateParams);
   }
 
   @Patch(":id")
