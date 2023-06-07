@@ -3,26 +3,31 @@ import {
   PaginateParamsFilterDto,
   QueryParamsFiltersDto,
   UpdateUserDto,
-  UserWithoutPasswordDto
+  UserWithoutPasswordDto,
 } from './users.dto';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { hash } from 'bcrypt';
-import { plainToClass } from 'class-transformer'
+import { plainToClass } from 'class-transformer';
 import { paginateClient } from 'prisma-paginate';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(data: CreateUserDto) {
     const password = await hash(data.password, 10);
 
-    const response = await this.prisma.user.create({ data: { ...data, password } });
+    const response = await this.prisma.user.create({
+      data: { ...data, password },
+    });
     return plainToClass(UserWithoutPasswordDto, response);
   }
 
-  async findAll(queriesParams: QueryParamsFiltersDto, paginateParams: PaginateParamsFilterDto) {
+  async findAll(
+    queriesParams: QueryParamsFiltersDto,
+    paginateParams: PaginateParamsFilterDto,
+  ) {
     const { page = 1, limit = 10 } = paginateParams;
 
     const paginator = paginateClient(this.prisma);
@@ -33,10 +38,10 @@ export class UsersService {
           id: true,
           name: true,
           username: true,
-          email: true
-        }
+          email: true,
+        },
       },
-      { page, limit }
+      { page, limit },
     );
     return response;
   }

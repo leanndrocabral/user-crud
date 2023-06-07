@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-import { plainToClass } from "class-transformer";
-import { UserWithoutPasswordDto } from "../users/users.dto";
+import { plainToClass } from 'class-transformer';
+import { UserWithoutPasswordDto } from '../users/users.dto';
 
 interface JwtPayload {
   [key: string]: string;
@@ -10,12 +10,12 @@ interface JwtPayload {
 
 @Injectable()
 export class SessionsService {
-  constructor(private prisma: PrismaService, private jwtService: JwtService) { }
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   async login(id: string) {
     const access_token = this.jwtService.sign(
       { sub: id },
-      { expiresIn: '48h', secret: process.env.SECRET_KEY }
+      { expiresIn: '48h', secret: process.env.SECRET_KEY },
     );
     return { access_token };
   }

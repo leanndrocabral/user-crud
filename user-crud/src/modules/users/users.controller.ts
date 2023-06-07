@@ -1,15 +1,25 @@
-import { Body, Controller, Get, Post, Patch, Param, Delete, ParseUUIDPipe, Query, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
   CreateUserDto,
   PaginateParamsFilterDto,
   QueryParamsFiltersDto,
-  UpdateUserDto
-} from "./users.dto";
+  UpdateUserDto,
+} from './users.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
   async create(@Body() data: CreateUserDto) {
@@ -19,18 +29,21 @@ export class UsersController {
   @Get()
   async findAll(
     @Query() queriesParams: QueryParamsFiltersDto,
-    @Query() paginateParams: PaginateParamsFilterDto
+    @Query() paginateParams: PaginateParamsFilterDto,
   ) {
     return await this.usersService.findAll(queriesParams, paginateParams);
   }
 
-  @Patch(":id")
-  async update(@Param("id", new ParseUUIDPipe()) id: string, @Body() data: UpdateUserDto) {
+  @Patch(':id')
+  async update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() data: UpdateUserDto,
+  ) {
     return await this.usersService.update(id, data);
   }
 
-  @Delete(":id")
-  async delete(@Param("id", new ParseUUIDPipe()) id: string) {
+  @Delete(':id')
+  async delete(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.delete(id);
   }
 }

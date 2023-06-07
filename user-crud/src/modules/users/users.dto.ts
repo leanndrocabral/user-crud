@@ -21,13 +21,12 @@ export class CreateUserDto {
   password: string;
 }
 
-export class UpdateUserDto extends PartialType(CreateUserDto) { }
+export class UpdateUserDto extends PartialType(CreateUserDto) {}
 
 export class UserWithoutPasswordDto extends CreateUserDto {
   @Exclude()
   password: string;
 }
-
 
 export class QueryParamsDto {
   @IsNotEmpty()
@@ -44,8 +43,7 @@ export class QueryParamsDto {
   email: string;
 }
 
-export class QueryParamsFiltersDto extends PartialType(QueryParamsDto) { }
-
+export class QueryParamsFiltersDto extends PartialType(QueryParamsDto) {}
 
 export class PaginateParamsDto {
   @IsNotEmpty()
@@ -59,4 +57,4 @@ export class PaginateParamsDto {
   limit: number;
 }
 
-export class PaginateParamsFilterDto extends PartialType(PaginateParamsDto) { }
+export class PaginateParamsFilterDto extends PartialType(PaginateParamsDto) {}

@@ -1,8 +1,16 @@
-import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { PrismaService } from '../database/prisma.service';
-import { UserExistsMiddleware, UserPermissionMiddleware } from './users.middleware';
+import {
+  UserExistsMiddleware,
+  UserPermissionMiddleware,
+} from './users.middleware';
 import { SessionAuthorizationMiddleware } from '../sessions/sessions.middleware';
 import { JwtService } from '@nestjs/jwt';
 
@@ -11,7 +19,6 @@ import { JwtService } from '@nestjs/jwt';
   providers: [UsersService, PrismaService, JwtService],
 })
 export class UsersModule implements NestModule {
-
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(UserExistsMiddleware)
@@ -21,11 +28,11 @@ export class UsersModule implements NestModule {
       .apply(
         SessionAuthorizationMiddleware,
         UserPermissionMiddleware,
-        UserExistsMiddleware
+        UserExistsMiddleware,
       )
       .forRoutes(
         { path: 'users/:id', method: RequestMethod.PATCH },
-        { path: 'users/:id', method: RequestMethod.DELETE }
+        { path: 'users/:id', method: RequestMethod.DELETE },
       );
   }
 }
