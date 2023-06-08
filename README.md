@@ -268,7 +268,7 @@ Caso o usuário não seja encontrado:
 
 ```json
 {
-  "message": "You are not allowed!"
+  "message": "User does not exists!"
 }
 ```
 
@@ -276,7 +276,7 @@ Caso você tente editar ou deletar um usuário diferente do seu:
 
 ```json
 {
-  "message": "User does not exists!"
+  "message": "You are not allowed!"
 }
 ```
 
